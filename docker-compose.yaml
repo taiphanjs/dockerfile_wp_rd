@@ -1,19 +1,19 @@
-version: '3.1'
+version: '3.7'
 
-services: 
-  redmine:
-    image: redmine
-    restart: always
-    ports: 
-      - '8080:3000'
-    environment: 
-      REDMINE_DB_MYSQL: db
-      REDMINE_DB_PASSWORD: password
-      REDMINE_SECRET_KEY_BASE: supersecretkey
-      REDMINE_PLUGINS_MIGRATE: 1
-  db:
-    image: mysql:5.7
-    restart: always
-    environment: 
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: redmine
+services:
+
+  dev-mode:
+    container_name: react-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/home/node/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000
+    command: npm start
+    environment:
+      - CHOKIDAR_USEPOLLING=true 
+    stdin_open: true
+    
